@@ -7,17 +7,13 @@
 #include <limits.h>
 #include <stddef.h>
 
-//#define DEBUG
+#define RANDOM_SRC_DEST
 
-#ifdef DEBUG
-#include "vld.h"
-#endif // DEBUG
-
-#define H_DIM 10
-#define V_DIM 10
+#define H_DIM 20
+#define V_DIM 20
 
 #define RAND_LOW -1
-#define RAND_HIGH 3
+#define RAND_HIGH 2
 
 #define SOURCE_X 0
 #define SOURCE_Y 0
