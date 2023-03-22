@@ -5,13 +5,13 @@ const int kVonneumannY[] = { 0, 0, 1, -1 };
 const int kVonneumannX[] = { 1, -1, 0, 0 };
 
 void genField(LeeStruct* leeStruct) {
-	leeStruct->field = (int**)malloc(V_DIM * sizeof(int*));
-	for (int i = 0; i < V_DIM; i++) {
-		leeStruct->field[i] = (int*)malloc(H_DIM * sizeof(int));
+	leeStruct->field = (int**)malloc(leeStruct->field_height * sizeof(int*));
+	for (int i = 0; i < leeStruct->field_height; i++) {
+		leeStruct->field[i] = (int*)malloc(leeStruct->field_width * sizeof(int));
 	}
 
-	for (int i = 0; i < V_DIM; i++) {
-		for (int j = 0; j < H_DIM; j++) {
+	for (int i = 0; i < leeStruct->field_height; i++) {
+		for (int j = 0; j < leeStruct->field_width; j++) {
 			if (i == leeStruct->sourceY && j == leeStruct->sourceX) {
 				leeStruct->field[i][j] = RAND_HIGH;
 				continue;
@@ -28,13 +28,13 @@ void genField(LeeStruct* leeStruct) {
 }
 
 void initMarks(LeeStruct* leeStruct) {
-	leeStruct->distMarks = (int**)malloc(V_DIM * sizeof(int*));
-	for (int i = 0; i < V_DIM; i++) {
-		leeStruct->distMarks[i] = (int*)malloc(H_DIM * sizeof(int));
+	leeStruct->distMarks = (int**)malloc(leeStruct->field_height * sizeof(int*));
+	for (int i = 0; i < leeStruct->field_height; i++) {
+		leeStruct->distMarks[i] = (int*)malloc(leeStruct->field_width * sizeof(int));
 	}
 
-	for (int i = 0; i < V_DIM; i++) {
-		for (int j = 0; j < H_DIM; j++) {
+	for (int i = 0; i < leeStruct->field_height; i++) {
+		for (int j = 0; j < leeStruct->field_width; j++) {
 			leeStruct->distMarks[i][j] = MARKS_INIT_VAL;
 		}
 	}
@@ -43,15 +43,15 @@ void initMarks(LeeStruct* leeStruct) {
 }
 
 void printField(LeeStruct* leeStruct, int state) {
-	for (int i = 0; i < H_DIM + 2; i++) {
+	for (int i = 0; i < leeStruct->field_width + 2; i++) {
 		printf("%3c", SYM_H_BOX);
 	}
 	printf("\n");
 
-	for (int i = 0; i < V_DIM; i++) {
+	for (int i = 0; i < leeStruct->field_height; i++) {
 		printf("%3c", SYM_V_BOX);
 
-		for (int j = 0; j < H_DIM; j++) {
+		for (int j = 0; j < leeStruct->field_width; j++) {
 			if (i == leeStruct->sourceY && j == leeStruct->sourceX) {
 				printf("%3c", SYM_SOURCE);
 				continue;
@@ -101,7 +101,7 @@ void printField(LeeStruct* leeStruct, int state) {
 		printf("\n");
 	}
 
-	for (int i = 0; i < H_DIM + 2; i++) {
+	for (int i = 0; i < leeStruct->field_width + 2; i++) {
 		printf("%3c", SYM_H_BOX);
 	}
 
@@ -109,19 +109,19 @@ void printField(LeeStruct* leeStruct, int state) {
 }
 
 void clearStruct(LeeStruct* leeStruct) {
-	for (int i = 0; i < V_DIM; i++) {
+	for (int i = 0; i < leeStruct->field_height; i++) {
 		free(leeStruct->field[i]);
 	}
 	free(leeStruct->field);
 
-	for (int i = 0; i < V_DIM; i++) {
+	for (int i = 0; i < leeStruct->field_height; i++) {
 		free(leeStruct->distMarks[i]);
 	}
 	free(leeStruct->distMarks);
 }
 
 int canVisit(LeeStruct* leeStruct, int x, int y) {
-	if ((x < 0) || (y < 0) || (x > (H_DIM - 1)) || (y > (V_DIM - 1))) {
+	if ((x < 0) || (y < 0) || (x > (leeStruct->field_width - 1)) || (y > (leeStruct->field_height - 1))) {
 		return 0;
 	}
 

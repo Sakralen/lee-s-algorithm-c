@@ -20,6 +20,8 @@
 #define STATE_TRACE 2
 
 typedef struct {
+	int field_height;
+	int field_width;
 	int** field;
 	int** distMarks;
 	int sourceX;

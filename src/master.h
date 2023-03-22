@@ -9,8 +9,8 @@
 
 #define RANDOM_SRC_DEST
 
-#define H_DIM 20
-#define V_DIM 20
+//#define H_DIM 20
+//#define V_DIM 30
 
 #define RAND_LOW -1
 #define RAND_HIGH 2
